@@ -1,7 +1,7 @@
 import Logo from "@/components/Logo";
 
 // Byt varumärkesnamn här – det används överallt på sidan.
-const BRAND = "intressebo";
+const BRAND = "bostadsplattformen";
 
 const listings = [
   { title: "Lägenhet, [ORT]", meta: "3 rum, 74 m²", interest: "8 intresserade", tint: "var(--green-light)" },
