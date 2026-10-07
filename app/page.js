@@ -1,19 +1,17 @@
 import Logo from "@/components/Logo";
+import { site, meny, hero, saFunkarDet, bostader, malgrupper, avslutning, sidfot } from "@/content";
 
-// Byt varumärkesnamn här – det används överallt på sidan.
-const BRAND = "bostadsplattformen";
+const kortFarger = {
+  gron: "var(--green-light)",
+  bla: "var(--blue-light)",
+  amber: "var(--amber-light)",
+};
 
-const listings = [
-  { title: "Lägenhet, [ORT]", meta: "3 rum, 74 m²", interest: "8 intresserade", tint: "var(--green-light)" },
-  { title: "Radhus, [ORT]", meta: "4 rum, 108 m²", interest: "15 intresserade", tint: "var(--blue-light)" },
-  { title: "Fritidshus, [ORT]", meta: "3 rum, 62 m²", interest: "5 intresserade", tint: "var(--amber-light)" },
-];
-
-const steps = [
-  { title: "Lägg upp gratis", text: "Beskriv din bostad och ladda upp några bilder. Det tar några minuter." },
-  { title: "Se intresset", text: "Köpare som söker just det du har matchas mot din bostad, och du ser hur många de är." },
-  { title: "Välj nästa steg", text: "Sälj med vårt AI-marknadsföringspaket eller bli kontaktad av en mäklare. Du bestämmer." },
-];
+const rutStil = {
+  bla: { ruta: "audience-blue", knapp: "btn-amber" },
+  gron: { ruta: "audience-green", knapp: "btn-blue" },
+  vit: { ruta: "audience-white", knapp: "btn-outline" },
+};
 
 export default function Home() {
   return (
@@ -21,14 +19,14 @@ export default function Home() {
       <header className="container nav">
         <a href="/" className="brand">
           <Logo />
-          <span>{BRAND}</span>
+          <span>{site.namn}</span>
         </a>
         <nav className="nav-links">
-          <a href="#">Sälj</a>
-          <a href="#">Hitta bostad</a>
-          <a href="#">För mäklare</a>
-          <a href="#" className="link-blue">Logga in</a>
-          <a href="#" className="btn btn-amber">Testa intresset</a>
+          {meny.lankar.map((l) => (
+            <a key={l.text} href={l.lank}>{l.text}</a>
+          ))}
+          <a href={meny.loggaIn.lank} className="link-blue">{meny.loggaIn.text}</a>
+          <a href={meny.knapp.lank} className="btn btn-amber">{meny.knapp.text}</a>
         </nav>
       </header>
 
@@ -36,15 +34,13 @@ export default function Home() {
         {/* Hero */}
         <section className="container hero">
           <div className="hero-text">
-            <h1>Hur många vill ha ditt hem?</h1>
-            <p className="lead">
-              Lägg upp din bostad gratis och se hur många köpare som är intresserade, innan du bestämmer dig för att sälja.
-            </p>
+            <h1>{hero.rubrik}</h1>
+            <p className="lead">{hero.text}</p>
             <div className="btn-row">
-              <a href="#" className="btn btn-amber btn-lg">Testa intresset gratis</a>
-              <a href="#" className="btn btn-outline btn-lg">Jag letar bostad</a>
+              <a href={hero.knapp1.lank} className="btn btn-amber btn-lg">{hero.knapp1.text}</a>
+              <a href={hero.knapp2.lank} className="btn btn-outline btn-lg">{hero.knapp2.text}</a>
             </div>
-            <p className="small">Gratis att lägga upp. Inget krav på att sälja.</p>
+            <p className="small">{hero.liten}</p>
           </div>
 
           <div className="hero-visual">
@@ -61,14 +57,14 @@ export default function Home() {
                 </svg>
               </div>
               <div className="hero-card-body">
-                <div className="card-title-serif">Villa, [ORT]</div>
-                <div className="muted">5 rum, 142 m², tomt 820 m²</div>
+                <div className="card-title-serif">{hero.kortRubrik}</div>
+                <div className="muted">{hero.kortInfo}</div>
               </div>
               <div className="badge-interest">
                 <span className="dot" />
-                <span>12 intresserade köpare</span>
+                <span>{hero.notis}</span>
               </div>
-              <div className="badge-match">Ny matchning: söker villa i [ORT]</div>
+              <div className="badge-match">{hero.matchning}</div>
             </div>
           </div>
         </section>
@@ -76,12 +72,12 @@ export default function Home() {
         {/* Så funkar det */}
         <section className="band-white">
           <div className="container stack-lg">
-            <h2 className="narrow">Från nyfiken till såld, i din egen takt</h2>
+            <h2 className="narrow">{saFunkarDet.rubrik}</h2>
             <div className="grid-3">
-              {steps.map((s, i) => (
-                <div key={s.title} className="step">
-                  <div className={`step-num ${i === 2 ? "step-num-amber" : ""}`}>{i + 1}</div>
-                  <h3>{s.title}</h3>
+              {saFunkarDet.steg.map((s, i) => (
+                <div key={s.rubrik} className="step">
+                  <div className={`step-num ${i === saFunkarDet.steg.length - 1 ? "step-num-amber" : ""}`}>{i + 1}</div>
+                  <h3>{s.rubrik}</h3>
                   <p className="muted">{s.text}</p>
                 </div>
               ))}
@@ -92,21 +88,21 @@ export default function Home() {
         {/* Bostäder */}
         <section className="container section stack-md">
           <div className="section-head">
-            <h2>Bostäder som väcker intresse</h2>
-            <a href="#" className="link-strong">Visa alla bostäder</a>
+            <h2>{bostader.rubrik}</h2>
+            <a href={bostader.visaAlla.lank} className="link-strong">{bostader.visaAlla.text}</a>
           </div>
           <div className="grid-3">
-            {listings.map((l) => (
-              <article key={l.title} className="listing">
-                <div className="listing-image" style={{ background: l.tint }}>
+            {bostader.lista.map((b) => (
+              <article key={b.rubrik + b.info} className="listing">
+                <div className="listing-image" style={{ background: kortFarger[b.farg] || kortFarger.gron }}>
                   <span className="pill">
                     <span className="dot dot-sm" />
-                    {l.interest}
+                    {b.intresse}
                   </span>
                 </div>
                 <div className="listing-body">
-                  <div className="listing-title">{l.title}</div>
-                  <div className="muted">{l.meta}</div>
+                  <div className="listing-title">{b.rubrik}</div>
+                  <div className="muted">{b.info}</div>
                 </div>
               </article>
             ))}
@@ -116,40 +112,35 @@ export default function Home() {
         {/* Målgrupper */}
         <section className="container section-tight">
           <div className="grid-3">
-            <div className="audience audience-blue">
-              <h3>Säljer du?</h3>
-              <p>Se vad köparna tycker innan du anlitar någon. Helt utan förpliktelser.</p>
-              <a href="#" className="btn btn-amber">Testa intresset</a>
-            </div>
-            <div className="audience audience-green">
-              <h3>Letar du bostad?</h3>
-              <p>Berätta vad du söker så matchar vi dig med bostäder, även innan de kommer ut på marknaden.</p>
-              <a href="#" className="btn btn-blue">Skapa bevakning</a>
-            </div>
-            <div className="audience audience-white">
-              <h3>Är du mäklare?</h3>
-              <p>Skapa ett gratis konto och få kontakt med säljare som redan funderar på att sälja.</p>
-              <a href="#" className="btn btn-outline">Skapa mäklarkonto</a>
-            </div>
+            {malgrupper.map((m) => {
+              const stil = rutStil[m.stil] || rutStil.vit;
+              return (
+                <div key={m.rubrik} className={`audience ${stil.ruta}`}>
+                  <h3>{m.rubrik}</h3>
+                  <p>{m.text}</p>
+                  <a href={m.knapp.lank} className={`btn ${stil.knapp}`}>{m.knapp.text}</a>
+                </div>
+              );
+            })}
           </div>
         </section>
 
-        {/* CTA */}
+        {/* Avslutning */}
         <section className="container section-tight">
           <div className="cta">
-            <h2>Ditt hem kan redan ha spekulanter.</h2>
-            <a href="#" className="btn btn-blue btn-lg">Kolla intresset gratis</a>
+            <h2>{avslutning.rubrik}</h2>
+            <a href={avslutning.knapp.lank} className="btn btn-blue btn-lg">{avslutning.knapp.text}</a>
           </div>
         </section>
       </main>
 
       <footer className="footer">
         <div className="container footer-inner">
-          <span className="footer-brand">{BRAND}</span>
+          <span className="footer-brand">{site.namn}</span>
           <div className="footer-links">
-            <a href="#">Om oss</a>
-            <a href="#">Kontakt</a>
-            <a href="#">Integritet</a>
+            {sidfot.lankar.map((l) => (
+              <a key={l.text} href={l.lank}>{l.text}</a>
+            ))}
           </div>
         </div>
       </footer>
