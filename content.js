@@ -6,9 +6,7 @@
 // =====================================================
 
 // ----- FORMULÄR (FORMSPREE) -----
-// Skapa ett gratis konto på formspree.io och ett nytt formulär.
-// Klistra in ID:t här: bokstäverna efter /f/ i länken, t.ex. "xyzabcde".
-export const formspreeId = "DITT-ID";
+export const formspreeId = "mdalpnng";
 
 // ----- NAMN OCH GOOGLE -----
 export const site = {
