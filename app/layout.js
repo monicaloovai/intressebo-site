@@ -1,13 +1,13 @@
 import { Fraunces, Nunito } from "next/font/google";
+import { site } from "@/content";
 import "./globals.css";
 
 const fraunces = Fraunces({ subsets: ["latin"], weight: ["500", "600"], variable: "--font-display" });
 const nunito = Nunito({ subsets: ["latin"], weight: ["400", "600", "700", "800"], variable: "--font-body" });
 
 export const metadata = {
-  title: "Intressebo – Testa intresset innan du säljer",
-  description:
-    "Lägg upp din bostad gratis och se hur många köpare som är intresserade, innan du bestämmer dig för att sälja.",
+  title: site.googleTitel,
+  description: site.googleBeskrivning,
 };
 
 export default function RootLayout({ children }) {
