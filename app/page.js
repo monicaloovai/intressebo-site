@@ -1,11 +1,5 @@
-import Logo from "@/components/Logo";
-import { site, meny, hero, saFunkarDet, bostader, malgrupper, avslutning, sidfot } from "@/content";
-
-const kortFarger = {
-  gron: "var(--green-light)",
-  bla: "var(--blue-light)",
-  amber: "var(--amber-light)",
-};
+import { Header, Footer, BostadKort } from "@/components/Delar";
+import { hero, saFunkarDet, bostader, malgrupper, avslutning } from "@/content";
 
 const rutStil = {
   bla: { ruta: "audience-blue", knapp: "btn-amber" },
@@ -16,19 +10,7 @@ const rutStil = {
 export default function Home() {
   return (
     <>
-      <header className="container nav">
-        <a href="/" className="brand">
-          <Logo />
-          <span>{site.namn}</span>
-        </a>
-        <nav className="nav-links">
-          {meny.lankar.map((l) => (
-            <a key={l.text} href={l.lank}>{l.text}</a>
-          ))}
-          <a href={meny.loggaIn.lank} className="link-blue">{meny.loggaIn.text}</a>
-          <a href={meny.knapp.lank} className="btn btn-amber">{meny.knapp.text}</a>
-        </nav>
-      </header>
+      <Header />
 
       <main>
         {/* Hero */}
@@ -45,16 +27,18 @@ export default function Home() {
 
           <div className="hero-visual">
             <div className="hero-card">
-              <div className="hero-image">
-                <svg width="300" height="230" viewBox="0 0 300 230" role="img" aria-label="Illustration av ett hus">
-                  <rect x="0" y="200" width="300" height="30" fill="#A9CDB5" />
-                  <circle cx="250" cy="60" r="26" fill="#fff" opacity="0.8" />
-                  <rect x="60" y="100" width="180" height="104" rx="18" fill="#fff" />
-                  <path d="M40 112 L150 30 L260 112" fill="none" stroke="var(--blue)" strokeWidth="18" strokeLinecap="round" strokeLinejoin="round" />
-                  <rect x="90" y="130" width="40" height="34" rx="10" fill="var(--green-light)" />
-                  <rect x="170" y="130" width="40" height="34" rx="10" fill="var(--green-light)" />
-                  <rect x="132" y="150" width="36" height="54" rx="10" fill="var(--green)" />
-                </svg>
+              <div className="hero-image" style={hero.bild ? { backgroundImage: `url(${hero.bild})` } : undefined}>
+                {!hero.bild && (
+                  <svg width="300" height="230" viewBox="0 0 300 230" role="img" aria-label="Illustration av ett hus">
+                    <rect x="0" y="200" width="300" height="30" fill="#A9CDB5" />
+                    <circle cx="250" cy="60" r="26" fill="#fff" opacity="0.8" />
+                    <rect x="60" y="100" width="180" height="104" rx="18" fill="#fff" />
+                    <path d="M40 112 L150 30 L260 112" fill="none" stroke="var(--blue)" strokeWidth="18" strokeLinecap="round" strokeLinejoin="round" />
+                    <rect x="90" y="130" width="40" height="34" rx="10" fill="var(--green-light)" />
+                    <rect x="170" y="130" width="40" height="34" rx="10" fill="var(--green-light)" />
+                    <rect x="132" y="150" width="36" height="54" rx="10" fill="var(--green)" />
+                  </svg>
+                )}
               </div>
               <div className="hero-card-body">
                 <div className="card-title-serif">{hero.kortRubrik}</div>
@@ -93,18 +77,7 @@ export default function Home() {
           </div>
           <div className="grid-3">
             {bostader.lista.map((b) => (
-              <article key={b.rubrik + b.info} className="listing">
-                <div className="listing-image" style={{ background: kortFarger[b.farg] || kortFarger.gron }}>
-                  <span className="pill">
-                    <span className="dot dot-sm" />
-                    {b.intresse}
-                  </span>
-                </div>
-                <div className="listing-body">
-                  <div className="listing-title">{b.rubrik}</div>
-                  <div className="muted">{b.info}</div>
-                </div>
-              </article>
+              <BostadKort key={b.rubrik + b.info} b={b} />
             ))}
           </div>
         </section>
@@ -134,16 +107,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="footer">
-        <div className="container footer-inner">
-          <span className="footer-brand">{site.namn}</span>
-          <div className="footer-links">
-            {sidfot.lankar.map((l) => (
-              <a key={l.text} href={l.lank}>{l.text}</a>
-            ))}
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }
